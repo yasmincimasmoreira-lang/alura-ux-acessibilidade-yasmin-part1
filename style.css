@@ -1,0 +1,90 @@
+/* Configurações Globais de Acessibilidade */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 22px; /* Fonte maior para facilitar a leitura */
+    line-height: 1.6;
+    background-color: #F4F6F8;
+    color: #111111; /* Contraste forte com o fundo */
+    padding-bottom: 100px;
+}
+
+/* Cabeçalho */
+.cabecalho {
+    background-color: #004B87; /* Azul escuro de alto contraste */
+    color: #FFFFFF;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+.cabecalho h1 {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+}
+
+.cabecalho p {
+    font-size: 1.3rem;
+}
+
+/* Conteúdo Principal */
+.conteudo {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Cartões de Dicas */
+.cartao {
+    background-color: #FFFFFF;
+    border: 3px solid #004B87; /* Borda espessa para delimitação visual clara */
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cartao h2 {
+    font-size: 1.6rem;
+    color: #004B87;
+    margin-bottom: 10px;
+}
+
+.cartao p {
+    font-size: 1.2rem;
+    color: #222222;
+}
+
+/* Rodapé Fixe com Botão de Destaque */
+.rodape {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-top: 2px solid #CCCCCC;
+    padding: 15px;
+    text-align: center;
+}
+
+.botao-ajuda {
+    background-color: #D9381E; /* Vermelho para destaque de emergência/atenção */
+    color: #FFFFFF;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    width: 100%;
+    max-width: 500px;
+    cursor: pointer;
+}
+
+.botao-ajuda:focus,
+.botao-ajuda:hover {
+    background-color: #A62B17;
+    outline: 4px solid #000000; /* Indicador claro de foco visual */
+}
