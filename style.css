@@ -38,13 +38,29 @@ body {
     padding: 0 15px;
 }
 
+/* Estilo para transformar os cards em links clicáveis */
+.cartao-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    margin-bottom: 20px;
+}
+
 /* Cartões de Dicas */
 .cartao {
     background-color: #FFFFFF;
     border: 3px solid #004B87; /* Borda espessa para delimitação visual clara */
     border-radius: 12px;
     padding: 20px;
-    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+/* Efeito de interatividade nos cards */
+.cartao-link:hover .cartao,
+.cartao-link:focus .cartao {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cartao h2 {
@@ -58,7 +74,93 @@ body {
     color: #222222;
 }
 
-/* Rodapé Fixe com Botão de Destaque */
+.dica-clique {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #004B87;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* ===================================================
+   ESTILOS DO MODAL E SOBREPOSIÇÃO (OVERLAY)
+   =================================================== */
+
+/* O fundo escuro semi-transparente que cobre a tela */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Escurece o resto da tela */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+    
+    /* Oculto por padrão */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+/* Exibe o Modal quando ativado via URL/target */
+.overlay:target {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* O Card em Destaque */
+.modal {
+    background-color: #FFFFFF;
+    border: 4px solid #004B87;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.overlay:target .modal {
+    transform: scale(1);
+}
+
+.modal h2 {
+    font-size: 1.8rem;
+    color: #004B87;
+    margin-bottom: 15px;
+}
+
+.modal p {
+    font-size: 1.3rem;
+    color: #111111;
+}
+
+/* Botão Fechar (X) */
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #D9381E;
+    text-decoration: none;
+    line-height: 1;
+    padding: 5px 10px;
+}
+
+.fechar:hover,
+.fechar:focus {
+    color: #A62B17;
+}
+
+/* Rodapé Fixo com Botão de Destaque */
 .rodape {
     position: fixed;
     bottom: 0;
@@ -68,6 +170,7 @@ body {
     border-top: 2px solid #CCCCCC;
     padding: 15px;
     text-align: center;
+    z-index: 999;
 }
 
 .botao-ajuda {
