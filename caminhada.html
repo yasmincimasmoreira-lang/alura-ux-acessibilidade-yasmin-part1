@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caminhada Leve - Cuidar Bem</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <header class="cabecalho">
+        <h1>Cuidar Bem</h1>
+        <p>Saúde e bem-estar para o seu dia</p>
+    </header>
+
+    <main class="conteudo">
+        <a href="index.html" class="btn-voltar">← Voltar para o Início</a>
+
+        <article class="artigo-detalhado">
+            <h2>👟 Benefícios da Caminhada Leve</h2>
+
+            <div class="ilustracao-tema">
+                <svg viewBox="0 0 24 24">
+                    <path d="M13.5,5.5A1.5,1.5 0 0,1 15,7A1.5,1.5 0 0,1 13.5,8.5A1.5,1.5 0 0,1 12,7A1.5,1.5 0 0,1 13.5,5.5M9.8,8.9L11,23H8.2L7.3,15L4.8,17.5V23H2V16L5.7,12.3C6.1,11.9 6.7,11.7 7.3,11.8L10.5,12.3C11.3,12.4 12,13 12.3,13.8L13.8,17.3C14.3,18.5 15.5,19.2 16.8,19.2H21V16.5H17.8L15.3,11.5C14.8,10.5 13.8,9.8 12.7,9.6L9.8,8.9Z"/>
+                </svg>
+            </div>
+
+            <p>Caminhar é um dos exercícios mais democráticos e seguros que existem. Não exige equipamentos sofisticados e pode ser praticado no seu próprio ritmo.</p>
+
+            <h3>Por que caminhar diariamente?</h3>
+            <ul>
+                <li><strong>Saúde do Coração:</strong> Estimula o bombeamento de sangue e reduz a pressão arterial.</li>
+                <li><strong>Fortalecimento Articular:</strong> Previne dores no joelho e no quadril, mantendo as articulações lubrificadas.</li>
+                <li><strong>Equilíbrio e Agilidade:</strong> Ajuda a melhorar o equilíbrio, prevenindo quedas no dia a dia.</li>
+            </ul>
+
+            <h3>Cuidados Importantes</h3>
+            <p>Use calçados confortáveis e preferencialmente antiderrapantes. Mantenha o corpo ereto, olhe para a frente durante o trajeto e evite terrenos irregulares.</p>
+        </article>
+    </main>
+
+    <footer class="rodape">
+        <button class="botao-ajuda" onclick="alert('Ligando para o contato de emergência...')">
+            📞 Pedir Ajuda
+        </button>
+    </footer>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const geometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+        const material = new THREE.MeshBasicMaterial({ color: 0x004B87, wireframe: true, transparent: true, opacity: 0.15 });
+        const meshes = [];
+
+        for(let i = 0; i < 10; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 20;
+            mesh.position.y = (Math.random() - 0.5) * 20;
+            mesh.position.z = (Math.random() - 0.5) * 10 - 5;
+            scene.add(mesh);
+            meshes.push(mesh);
+        }
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            meshes.forEach(m => {
+                m.rotation.x += 0.005;
+                m.rotation.y += 0.005;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

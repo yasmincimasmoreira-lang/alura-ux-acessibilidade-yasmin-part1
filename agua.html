@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importância da Hidratação - Cuidar Bem</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <header class="cabecalho">
+        <h1>Cuidar Bem</h1>
+        <p>Saúde e bem-estar para o seu dia</p>
+    </header>
+
+    <main class="conteudo">
+        <a href="index.html" class="btn-voltar">← Voltar para o Início</a>
+
+        <article class="artigo-detalhado">
+            <h2>💧 A Importância da Hidratação Diária</h2>
+
+            <div class="ilustracao-tema">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,2.69L5.5,10.2C4.5,11.3 4,12.63 4,14A8,8 0 0,0 12,22A8,8 0 0,0 20,14C20,12.63 19.5,11.3 18.5,10.2L12,2.69Z"/>
+                </svg>
+            </div>
+
+            <p>Manter o corpo bem hidratado é fundamental para a manutenção das funções vitais. Com o passar dos anos, a sensação natural de sede pode diminuir, facilitando episódios de desidratação sem que percebamos.</p>
+
+            <h3>Por que beber água regularmente?</h3>
+            <ul>
+                <li><strong>Melhora a circulação:</strong> A água ajuda a manter o sangue fluido, facilitando o transporte de nutrientes.</li>
+                <li><strong>Protege os rins:</strong> A ingestão contínua previne complicações renais e infecções urinárias.</li>
+                <li><strong>Auxilia na memória:</strong> A desidratação leve já pode causar confusão mental e fadiga.</li>
+                <li><strong>Regula o intestino:</strong> A água facilita a digestão e evita a constipação.</li>
+            </ul>
+
+            <h3>Dicas Práticas</h3>
+            <p>Tenha sempre uma garrafinha de água por perto. Se achar difícil tomar água pura, experimente aromatizá-la com fatias de limão ou folhas de hortelã.</p>
+        </article>
+    </main>
+
+    <footer class="rodape">
+        <button class="botao-ajuda" onclick="alert('Ligando para o contato de emergência...')">
+            📞 Pedir Ajuda
+        </button>
+    </footer>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const geometry = new THREE.IcosahedronGeometry(1.2, 0);
+        const material = new THREE.MeshBasicMaterial({ color: 0x004B87, wireframe: true, transparent: true, opacity: 0.15 });
+        const meshes = [];
+
+        for(let i = 0; i < 10; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 20;
+            mesh.position.y = (Math.random() - 0.5) * 20;
+            mesh.position.z = (Math.random() - 0.5) * 10 - 5;
+            scene.add(mesh);
+            meshes.push(mesh);
+        }
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            meshes.forEach(m => {
+                m.rotation.x += 0.003;
+                m.rotation.y += 0.005;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

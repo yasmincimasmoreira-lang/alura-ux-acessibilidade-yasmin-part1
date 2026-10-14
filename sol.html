@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banho de Sol e Vitamina D - Cuidar Bem</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <header class="cabecalho">
+        <h1>Cuidar Bem</h1>
+        <p>Saúde e bem-estar para o seu dia</p>
+    </header>
+
+    <main class="conteudo">
+        <a href="index.html" class="btn-voltar">← Voltar para o Início</a>
+
+        <article class="artigo-detalhado">
+            <h2>☀️ A Importância de Tomar Sol</h2>
+
+            <div class="ilustracao-tema">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.4 6.44,8.25 6.14,9.17L3.34,7M20.66,7L17.86,9.17C17.56,8.25 17.1,7.4 16.5,6.65L20.66,7M12,22L9.61,18.58C10.35,18.85 11.16,19 12,19C12.84,19 13.65,18.85 14.39,18.58L12,22M3.34,17L6.14,14.83C6.44,15.75 6.9,16.6 17.5,17.35L3.34,17M20.66,17L16.5,17.35C17.1,16.6 17.56,15.75 17.86,14.83L20.66,17Z"/>
+                </svg>
+            </div>
+
+            <p>O sol é a principal fonte de estímulo para a produção de Vitamina D em nosso organismo. Esta vitamina desempenha papéis essenciais na manutenção dos ossos e do sistema imunológico.</p>
+
+            <h3>Benefícios do Banho de Sol</h3>
+            <ul>
+                <li><strong>Fortalecimento Ósseo:</strong> A Vitamina D permite que o cálcio ingerido na alimentação seja absorvido pelo corpo.</li>
+                <li><strong>Melhora do Humor:</strong> A luz solar estimula a liberação de serotonina, hormônio responsável pelo bem-estar.</li>
+                <li><strong>Regulação do Sono:</strong> A exposição ao sol durante a manhã ajuda a regular o relógio biológico diário.</li>
+            </ul>
+
+            <h3>Como tomar sol com segurança?</h3>
+            <p>Procure se expor ao sol da manhã (entre 8h e 10h) por cerca de 15 a 20 minutos. Não é necessário exagero: braços e pernas expostos já são suficientes.</p>
+        </article>
+    </main>
+
+    <footer class="rodape">
+        <button class="botao-ajuda" onclick="alert('Ligando para o contato de emergência...')">
+            📞 Pedir Ajuda
+        </button>
+    </footer>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const geometry = new THREE.TorusGeometry(1, 0.3, 8, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0x004B87, wireframe: true, transparent: true, opacity: 0.15 });
+        const meshes = [];
+
+        for(let i = 0; i < 10; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 20;
+            mesh.position.y = (Math.random() - 0.5) * 20;
+            mesh.position.z = (Math.random() - 0.5) * 10 - 5;
+            scene.add(mesh);
+            meshes.push(mesh);
+        }
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            meshes.forEach(m => {
+                m.rotation.x += 0.006;
+                m.rotation.y += 0.004;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organização de Remédios - Cuidar Bem</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+
+    <header class="cabecalho">
+        <h1>Cuidar Bem</h1>
+        <p>Saúde e bem-estar para o seu dia</p>
+    </header>
+
+    <main class="conteudo">
+        <a href="index.html" class="btn-voltar">← Voltar para o Início</a>
+
+        <article class="artigo-detalhado">
+            <h2>💊 Remédios no Horário Certo</h2>
+
+            <div class="ilustracao-tema">
+                <svg viewBox="0 0 24 24">
+                    <path d="M4.5,10.5C3.67,10.5 3,11.17 3,12C3,12.83 3.67,13.5 4.5,13.5H19.5C20.33,13.5 21,12.83 21,12C21,11.17 20.33,10.5 19.5,10.5H4.5M6,6A3,3 0 0,0 3,9H21A3,3 0 0,0 18,6H6M6,18A3,3 0 0,0 18,18H3A3,3 0 0,0 6,18Z"/>
+                </svg>
+            </div>
+
+            <p>O uso correto dos medicamentos garante que o tratamento funcione de forma eficaz e sem complicações. A organização diária é fundamental para a segurança da sua saúde.</p>
+
+            <h3>Organização e Praticidade</h3>
+            <ul>
+                <li><strong>Caixas Organizadoras:</strong> Separe os remédios por dia da semana e por períodos (Manhã, Tarde e Noite).</li>
+                <li><strong>Alarmes e Lembretes:</strong> Use despertadores no celular ou peça para familiares ajudarem na rotina de lembretes.</li>
+                <li><strong>Acompanhamento Médico:</strong> Nunca altere os horários ou doses prescritos sem consultar o médico.</li>
+            </ul>
+
+            <h3>Dica de Segurança</h3>
+            <p>Mantenha sempre os remédios em local visível, longe do alcance da luz solar direta e da umidade (evite guardar no banheiro).</p>
+        </article>
+    </main>
+
+    <footer class="rodape">
+        <button class="botao-ajuda" onclick="alert('Ligando para o contato de emergência...')">
+            📞 Pedir Ajuda
+        </button>
+    </footer>
+
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const geometry = new THREE.CylinderGeometry(0.8, 0.8, 1.5, 12);
+        const material = new THREE.MeshBasicMaterial({ color: 0x004B87, wireframe: true, transparent: true, opacity: 0.15 });
+        const meshes = [];
+
+        for(let i = 0; i < 10; i++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (Math.random() - 0.5) * 20;
+            mesh.position.y = (Math.random() - 0.5) * 20;
+            mesh.position.z = (Math.random() - 0.5) * 10 - 5;
+            scene.add(mesh);
+            meshes.push(mesh);
+        }
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            meshes.forEach(m => {
+                m.rotation.x += 0.004;
+                m.rotation.z += 0.006;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
