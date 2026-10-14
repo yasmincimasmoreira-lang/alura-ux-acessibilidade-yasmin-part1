@@ -7,19 +7,34 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 22px; /* Fonte maior para facilitar a leitura */
+    font-size: 22px;
     line-height: 1.6;
     background-color: #F4F6F8;
-    color: #111111; /* Contraste forte com o fundo */
+    color: #111111;
     padding-bottom: 100px;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Fundo 3D Canvas */
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* Cabeçalho */
 .cabecalho {
-    background-color: #004B87; /* Azul escuro de alto contraste */
+    background-color: #004B87;
     color: #FFFFFF;
     text-align: center;
     padding: 25px 15px;
+    position: relative;
+    z-index: 10;
 }
 
 .cabecalho h1 {
@@ -33,9 +48,11 @@ body {
 
 /* Conteúdo Principal */
 .conteudo {
-    max-width: 600px;
+    max-width: 700px;
     margin: 20px auto;
     padding: 0 15px;
+    position: relative;
+    z-index: 10;
 }
 
 /* Estilo para transformar os cards em links clicáveis */
@@ -46,27 +63,25 @@ body {
     margin-bottom: 20px;
 }
 
-/* Cartões de Dicas */
-.cartao {
-    background-color: #FFFFFF;
-    border: 3px solid #004B87; /* Borda espessa para delimitação visual clara */
+/* Cartões de Dicas e Artigos */
+.cartao, .artigo-detalhado {
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 3px solid #004B87;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
 }
 
-/* Efeito de interatividade nos cards */
 .cartao-link:hover .cartao,
 .cartao-link:focus .cartao {
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.cartao h2 {
-    font-size: 1.6rem;
+.cartao h2, .artigo-detalhado h2 {
+    font-size: 1.8rem;
     color: #004B87;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .cartao p {
@@ -77,87 +92,53 @@ body {
 .dica-clique {
     display: inline-block;
     margin-top: 10px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #004B87;
     font-weight: bold;
     text-decoration: underline;
 }
 
-/* ===================================================
-   ESTILOS DO MODAL E SOBREPOSIÇÃO (OVERLAY)
-   =================================================== */
-
-/* O fundo escuro semi-transparente que cobre a tela */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.75); /* Escurece o resto da tela */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    z-index: 1000;
-    
-    /* Oculto por padrão */
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-/* Exibe o Modal quando ativado via URL/target */
-.overlay:target {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* O Card em Destaque */
-.modal {
-    background-color: #FFFFFF;
-    border: 4px solid #004B87;
-    border-radius: 16px;
-    padding: 30px;
-    max-width: 500px;
-    width: 100%;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
-}
-
-.overlay:target .modal {
-    transform: scale(1);
-}
-
-.modal h2 {
-    font-size: 1.8rem;
-    color: #004B87;
-    margin-bottom: 15px;
-}
-
-.modal p {
-    font-size: 1.3rem;
-    color: #111111;
-}
-
-/* Botão Fechar (X) */
-.fechar {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #D9381E;
+/* Botão Voltar */
+.btn-voltar {
+    display: inline-block;
+    background-color: #004B87;
+    color: #FFFFFF;
     text-decoration: none;
-    line-height: 1;
-    padding: 5px 10px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.fechar:hover,
-.fechar:focus {
-    color: #A62B17;
+.btn-voltar:hover, .btn-voltar:focus {
+    background-color: #003366;
+}
+
+/* Figuras e Ilustrações das Páginas Secundárias */
+.ilustracao-tema {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ilustracao-tema svg {
+    max-width: 150px;
+    height: auto;
+    fill: #004B87;
+}
+
+/* Texto das Páginas Secundárias */
+.artigo-detalhado p {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.artigo-detalhado ul {
+    margin: 15px 0 20px 30px;
+    font-size: 1.1rem;
+}
+
+.artigo-detalhado li {
+    margin-bottom: 8px;
 }
 
 /* Rodapé Fixo com Botão de Destaque */
@@ -174,7 +155,7 @@ body {
 }
 
 .botao-ajuda {
-    background-color: #D9381E; /* Vermelho para destaque de emergência/atenção */
+    background-color: #D9381E;
     color: #FFFFFF;
     font-size: 1.4rem;
     font-weight: bold;
@@ -189,5 +170,5 @@ body {
 .botao-ajuda:focus,
 .botao-ajuda:hover {
     background-color: #A62B17;
-    outline: 4px solid #000000; /* Indicador claro de foco visual */
+    outline: 4px solid #000000;
 }
