@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuidar Bem - Dicas de Saúde</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+
+    <div id="canvas-container"></div>
 
     <header class="cabecalho">
         <h1>Cuidar Bem</h1>
@@ -15,74 +18,41 @@
 
     <main class="conteudo">
         <!-- Card 1 -->
-        <a href="#modal-agua" class="cartao-link">
+        <a href="agua.html" class="cartao-link">
             <section class="cartao">
                 <h2>💧 Beba Água</h2>
                 <p>Tome ao menos um copo de água a cada duas horas...</p>
-                <span class="dica-clique">Clique para ver mais</span>
+                <span class="dica-clique">Clique para ler o artigo completo</span>
             </section>
         </a>
 
         <!-- Card 2 -->
-        <a href="#modal-sol" class="cartao-link">
+        <a href="sol.html" class="cartao-link">
             <section class="cartao">
                 <h2>☀️ Tome Sol</h2>
                 <p>Procure tomar 15 minutos de sol pela manhã...</p>
-                <span class="dica-clique">Clique para ver mais</span>
+                <span class="dica-clique">Clique para ler o artigo completo</span>
             </section>
         </a>
 
         <!-- Card 3 -->
-        <a href="#modal-caminhada" class="cartao-link">
+        <a href="caminhada.html" class="cartao-link">
             <section class="cartao">
                 <h2>👟 Caminhada Leve</h2>
                 <p>Faça uma caminhada curta em local plano...</p>
-                <span class="dica-clique">Clique para ver mais</span>
+                <span class="dica-clique">Clique para ler o artigo completo</span>
             </section>
         </a>
 
         <!-- Card 4 -->
-        <a href="#modal-remedios" class="cartao-link">
+        <a href="remedios.html" class="cartao-link">
             <section class="cartao">
                 <h2>💊 Remédios no Horário</h2>
                 <p>Mantenha seus medicamentos organizados...</p>
-                <span class="dica-clique">Clique para ver mais</span>
+                <span class="dica-clique">Clique para ler o artigo completo</span>
             </section>
         </a>
     </main>
-
-    <!-- Estruturas dos Modais (Sobreposição) -->
-    <div id="modal-agua" class="overlay">
-        <div class="modal">
-            <a href="#" class="fechar">&times;</a>
-            <h2>💧 Beba Água</h2>
-            <p>Tome ao menos um copo de água a cada duas horas, mesmo sem sentir sede. A hidratação mantém o corpo forte e a mente alerta.</p>
-        </div>
-    </div>
-
-    <div id="modal-sol" class="overlay">
-        <div class="modal">
-            <a href="#" class="fechar">&times;</a>
-            <h2>☀️ Tome Sol</h2>
-            <p>Procure tomar 15 minutos de sol pela manhã. Isso ajuda o seu corpo a produzir Vitamina D e fortalece os ossos.</p>
-        </div>
-    </div>
-
-    <div id="modal-caminhada" class="overlay">
-        <div class="modal">
-            <a href="#" class="fechar">&times;</a>
-            <h2>👟 Caminhada Leve</h2>
-            <p>Faça uma caminhada curta em local plano. Movimentar o corpo melhora a circulação e fortalece as pernas.</p>
-        </div>
-    </div>
-
-    <div id="modal-remedios" class="overlay">
-        <div class="modal">
-            <a href="#" class="fechar">&times;</a>
-            <h2>💊 Remédios no Horário</h2>
-            <p>Mantenha seus medicamentos organizados por dia e horário para evitar esquecimentos.</p>
-        </div>
-    </div>
 
     <footer class="rodape">
         <button class="botao-ajuda" onclick="alert('Ligando para o contato de emergência...')">
@@ -90,5 +60,52 @@
         </button>
     </footer>
 
+    <script>
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const geometries = [
+            new THREE.BoxGeometry(1.5, 1.5, 1.5),
+            new THREE.SphereGeometry(1, 16, 16),
+            new THREE.TorusGeometry(1, 0.4, 12, 24),
+            new THREE.TetrahedronGeometry(1.5)
+        ];
+
+        const material = new THREE.MeshBasicMaterial({ color: 0x004B87, wireframe: true, transparent: true, opacity: 0.15 });
+        const meshes = [];
+
+        for(let i = 0; i < 12; i++) {
+            const geom = geometries[Math.floor(Math.random() * geometries.length)];
+            const mesh = new THREE.Mesh(geom, material);
+            mesh.position.x = (Math.random() - 0.5) * 20;
+            mesh.position.y = (Math.random() - 0.5) * 20;
+            mesh.position.z = (Math.random() - 0.5) * 10 - 5;
+            scene.add(mesh);
+            meshes.push(mesh);
+        }
+
+        camera.position.z = 8;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            meshes.forEach(m => {
+                m.rotation.x += 0.005;
+                m.rotation.y += 0.008;
+            });
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
